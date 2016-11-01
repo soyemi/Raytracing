@@ -20,7 +20,7 @@ namespace RayTracing
         private Bitmap bitmap;
 
 
-        public static DirectionalLight Light;
+        public static LightBase Light;
         public static Vector3 AmbientLight;
 
         public static Vector3 ViewPoint
@@ -41,7 +41,7 @@ namespace RayTracing
             bitmap = new Bitmap(width, height);
         }
 
-        public void SetDirectionLight(DirectionalLight dl)
+        public void SetLight(LightBase dl)
         {
             Light = dl;
         }

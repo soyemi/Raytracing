@@ -17,9 +17,9 @@ namespace RayTracing
         //Lambertian Shading
         public override Color CaculateColor(IntersectResult intersect)
         {
-            Vector3 ldir = -RenderContext.Light.lightDirection;
+            Vector3 ldir = -RenderContext.Light.GetDir(intersect.position);
             float dot = ldir.Dot(intersect.normal);
-            Vector3 colv3 = mainColor * Math.Max(0,dot) * RenderContext.Light.lightAtten * RenderContext.Light.lightColor;
+            Vector3 colv3 = mainColor * Math.Max(0,dot) * RenderContext.Light.atten * RenderContext.Light.color;
             colv3 += RenderContext.AmbientLight;
             return Util.VecToColor(colv3);
         }

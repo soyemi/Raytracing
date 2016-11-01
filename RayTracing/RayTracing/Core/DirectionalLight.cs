@@ -7,16 +7,17 @@ using System.Drawing;
 
 namespace RayTracing
 {
-    public class DirectionalLight
+    public class DirectionalLight : LightBase
     {
-        public Vector3 lightColor;
         public Vector3 lightDirection;
-        public float lightAtten = 1f;
-        public DirectionalLight(Vector3 dir,Color color,float atten)
+        public DirectionalLight(Vector3 dir,Vector3 color,float atten) :base(color,atten)
         {
-            this.lightColor = Util.ColorToVec(color);
             this.lightDirection = dir.Nor();
-            this.lightAtten = atten;
+        }
+
+        public override Vector3 GetDir(Vector3 point)
+        {
+            return lightDirection;
         }
     }
 }

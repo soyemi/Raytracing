@@ -18,14 +18,14 @@ namespace RayTracing
         public override Color CaculateColor(IntersectResult intersect)
         {
             Vector3 v = RenderContext.ViewPoint - intersect.position;
-            Vector3 l = -RenderContext.Light.lightDirection;
+            Vector3 l = -RenderContext.Light.GetDir(intersect.position);
             Vector3 h = (v + l).Nor();
             Vector3 n = intersect.normal;
 
-            Vector3 Kd = mainColor * RenderContext.Light.lightAtten * Math.Max(0, n.Dot(l)) * RenderContext.Light.lightColor;
+            Vector3 Kd = mainColor * RenderContext.Light.atten * Math.Max(0, n.Dot(l)) * RenderContext.Light.color;
 
             float ndh = Math.Max(0, n.Dot(h));
-            Vector3 Ks = RenderContext.Light.lightColor *(float) Math.Pow((double)ndh, glossy);
+            Vector3 Ks = RenderContext.Light.color * (float) Math.Pow((double)ndh, glossy);
 
             return Util.VecToColor(RenderContext.AmbientLight+ Kd + Ks);
         }

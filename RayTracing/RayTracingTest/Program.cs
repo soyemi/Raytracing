@@ -31,8 +31,13 @@ namespace RayTracingTest
             Camera camera = new Camera(Vector3.Zero, Vector3.Up, Vector3.Right, 60);
             contex.SetCamera(camera);
 
-            DirectionalLight light = new DirectionalLight(new Vector3(5f,-5f,-5f), Color.Wheat, 1.2f);
-            contex.SetDirectionLight(light);
+            //directional light
+            //DirectionalLight dlight = new DirectionalLight(new Vector3(5f,-5f,-5f),new Vector3(1f,1f,1f), 1.2f);
+            //contex.SetLight(dlight);
+
+            //pointLight
+            PointLight plight = new PointLight(new Vector3(-5f, 5f, 3f), new Vector3(1f, 1f, 1f), 1f);
+            contex.SetLight(plight);
 
             contex.SetAmbientLight(Color.FromArgb(50,50,50));
 
