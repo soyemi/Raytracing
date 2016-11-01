@@ -9,6 +9,11 @@ namespace RayTracing
 {
     public abstract class Material
     {
+        public Vector3 mainColor;
+        public Material(Color color)
+        {
+            mainColor = Util.ColorToVec(color);
+        }
         public abstract Color CaculateColor(IntersectResult intersect);
     }
 }

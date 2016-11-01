@@ -15,13 +15,21 @@ namespace RayTracing
         private List<Primitive> m_geoms;
         private int m_width;
         private int m_height;
-        private Camera m_camera;
+        private static Camera m_camera;
 
         private Bitmap bitmap;
 
 
         public static DirectionalLight Light;
         public static Vector3 AmbientLight;
+
+        public static Vector3 ViewPoint
+        {
+            get
+            {
+                return m_camera.pos;
+            }
+        }
 
 
 

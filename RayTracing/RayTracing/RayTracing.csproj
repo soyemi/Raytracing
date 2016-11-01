@@ -45,6 +45,7 @@
     <Compile Include="Core\DirectionalLight.cs" />
     <Compile Include="Core\IntersectResult.cs" />
     <Compile Include="Core\Material.cs" />
+    <Compile Include="MaterialBlinnPhong.cs" />
     <Compile Include="MaterialColor.cs" />
     <Compile Include="Core\Primitive.cs" />
     <Compile Include="Core\PrimitiveUnion.cs" />

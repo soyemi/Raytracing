@@ -9,17 +9,17 @@ namespace RayTracing
 {
     public class MaterialDiffuse : Material
     {
-        public Vector3 color;
-        public MaterialDiffuse(Color color)
+        public MaterialDiffuse(Color color):base(color)
         {
-            this.color = new Vector3(color.R * 1.0f / 256f, color.B * 1.0f / 256f, color.G * 1.0f / 256f);
         }
 
+
+        //Lambertian Shading
         public override Color CaculateColor(IntersectResult intersect)
         {
             Vector3 ldir = -RenderContext.Light.lightDirection;
             float dot = ldir.Dot(intersect.normal);
-            Vector3 colv3 = color * dot * RenderContext.Light.lightAtten * RenderContext.Light.lightColor;
+            Vector3 colv3 = mainColor * Math.Max(0,dot) * RenderContext.Light.lightAtten * RenderContext.Light.lightColor;
             colv3 += RenderContext.AmbientLight;
             return Util.VecToColor(colv3);
         }

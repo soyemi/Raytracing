@@ -9,15 +9,13 @@ namespace RayTracing
 {
     public class MaterialColor:Material
     {
-        public Color color;
-        public MaterialColor(Color c)
+        public MaterialColor(Color c):base(c)
         {
-            color = c;
         }
 
         public override Color CaculateColor(IntersectResult intersect)
         {
-            return color;
+            return Util.VecToColor(mainColor);
         }
 
     }

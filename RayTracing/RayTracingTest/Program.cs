@@ -31,16 +31,16 @@ namespace RayTracingTest
             Camera camera = new Camera(Vector3.Zero, Vector3.Up, Vector3.Right, 60);
             contex.SetCamera(camera);
 
-            DirectionalLight light = new DirectionalLight(new Vector3(1f,-3f,-0.2f), Color.Wheat, 1.2f);
+            DirectionalLight light = new DirectionalLight(new Vector3(5f,-5f,-5f), Color.Wheat, 1.2f);
             contex.SetDirectionLight(light);
 
             contex.SetAmbientLight(Color.FromArgb(50,50,50));
 
-            Sphere sphere = new Sphere(new Vector3(0, 0, -5f), 1f);
-            sphere.SetMaterial(new MaterialDiffuse(Color.Pink));
+            Sphere sphere = new Sphere(new Vector3(0, -0.2f, -5.3f), 1f);
+            sphere.SetMaterial(new MaterialDiffuse(Color.FromArgb(200,20,30)));
 
-            Sphere sphere2 = new Sphere(new Vector3(1, 0, -5f), 1.2f);
-            sphere2.SetMaterial(new MaterialDiffuse(Color.Blue));
+            Sphere sphere2 = new Sphere(new Vector3(1.2f, 0, -5f), 1.2f);
+            sphere2.SetMaterial(new MaterialBlinnPhong(Color.FromArgb(12,25,213),10));
 
             contex.AddGeometry(sphere);
             contex.AddGeometry(sphere2);
