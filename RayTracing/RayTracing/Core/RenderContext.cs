@@ -66,7 +66,7 @@ namespace RayTracing
                 {
                     float dx = k / (float)m_width;
                     Ray ray = m_camera.GenerateRay(dx, dy);
-                    IntertsectResult intersect = union.Intertsect(ray);
+                    IntersectResult intersect = union.Intersect(ray);
                     if(intersect.primitive != null)
                     {
                         bitmap.SetPixel(k, i, intersect.primitive.material.CaculateColor(intersect));

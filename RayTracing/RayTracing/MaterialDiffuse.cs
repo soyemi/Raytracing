@@ -15,7 +15,7 @@ namespace RayTracing
             this.color = new Vector3(color.R * 1.0f / 256f, color.B * 1.0f / 256f, color.G * 1.0f / 256f);
         }
 
-        public override Color CaculateColor(IntertsectResult intersect)
+        public override Color CaculateColor(IntersectResult intersect)
         {
             Vector3 ldir = -RenderContext.Light.lightDirection;
             float dot = ldir.Dot(intersect.normal);

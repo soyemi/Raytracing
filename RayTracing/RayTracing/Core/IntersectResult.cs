@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace RayTracing
 {
-    public class IntertsectResult
+    public class IntersectResult
     {
         public Primitive primitive;
         public Vector3 position;
         public Vector3 normal;
         public float distance;
 
-        public IntertsectResult()
+        public IntersectResult()
         {
             this.primitive = null;
             this.distance = 0;
@@ -22,7 +22,7 @@ namespace RayTracing
             this.normal = Vector3.Zero;
         }
 
-        public IntertsectResult(Primitive primitive, Vector3 pos,Vector3 nor,float dist)
+        public IntersectResult(Primitive primitive, Vector3 pos,Vector3 nor,float dist)
         {
             this.primitive = primitive;
             this.position = pos;

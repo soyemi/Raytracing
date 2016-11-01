@@ -17,22 +17,22 @@ namespace RayTracing
             this.radius = radius;
         }
 
-        public override IntertsectResult Intersect(Ray ray)
+        public override IntersectResult Intersect(Ray ray)
         {
             Vector3 centerRay = center - ray.origin;
             float centerDist = centerRay.length;
-            if (centerDist < radius) return new IntertsectResult();
+            if (centerDist < radius) return new IntersectResult();
             float cosa = centerRay.Dot(ray.dir) / centerDist;
-            if (cosa < 0) return new IntertsectResult();
+            if (cosa < 0) return new IntersectResult();
             float sina =(float)Math.Sqrt((float)(1f - cosa * cosa));
             float lined = centerDist * sina;
-            if (lined > radius) return new IntertsectResult();
+            if (lined > radius) return new IntersectResult();
             float linecut = (float)Math.Sqrt(radius * radius - lined * lined);
             float dist = centerDist * cosa;
             float fdist = dist - linecut;
             Vector3 cutpos = ray.Pos(fdist);
             Vector3 nor = cutpos - center;
-            return new IntertsectResult(this, cutpos, nor.Nor(), fdist);
+            return new IntersectResult(this, cutpos, nor.Nor(), fdist);
         }
     }
 }

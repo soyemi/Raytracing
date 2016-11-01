@@ -15,7 +15,7 @@ namespace RayTracing
             color = c;
         }
 
-        public override Color CaculateColor(IntertsectResult intersect)
+        public override Color CaculateColor(IntersectResult intersect)
         {
             return color;
         }

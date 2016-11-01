@@ -13,7 +13,7 @@ namespace RayTracing
         {
             material = mat;
         }
-        abstract public IntertsectResult Intersect(Ray ray);
+        abstract public IntersectResult Intersect(Ray ray);
 
     }
 }
