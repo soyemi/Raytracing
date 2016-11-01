@@ -9,6 +9,6 @@ namespace RayTracing
 {
     public abstract class Material
     {
-        public abstract Color CaculateColor();
+        public abstract Color CaculateColor(IntertsectResult intersect);
     }
 }

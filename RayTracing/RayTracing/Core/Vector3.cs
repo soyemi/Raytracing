@@ -40,6 +40,12 @@ namespace RayTracing
             return v * m;
         }
 
+        public static Vector3 operator *(Vector3 m,Vector3 n)
+        {
+            return new Vector3(m.x * n.x, m.y * n.y, m.z * n.z);
+        }
+
+
         public static Vector3 operator /(Vector3 v, float m)
         {
             return new Vector3(v.x / m, v.y / m, v.z / m);

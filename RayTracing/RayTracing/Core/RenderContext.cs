@@ -19,6 +19,12 @@ namespace RayTracing
 
         private Bitmap bitmap;
 
+
+        public static DirectionalLight Light;
+        public static Vector3 AmbientLight;
+
+
+
         public RenderContext(int width,int height)
         {
             m_width = width;
@@ -26,6 +32,12 @@ namespace RayTracing
             m_geoms = new List<Primitive>();
             bitmap = new Bitmap(width, height);
         }
+
+        public void SetDirectionLight(DirectionalLight dl)
+        {
+            Light = dl;
+        }
+
 
         public void AddGeometry(Primitive geom)
         {
@@ -35,6 +47,11 @@ namespace RayTracing
         public void SetCamera(Camera camera)
         {
             m_camera = camera;
+        }
+
+        public void SetAmbientLight(Color color)
+        {
+            AmbientLight = Util.ColorToVec(color);
         }
 
         public Bitmap Render()
@@ -52,7 +69,7 @@ namespace RayTracing
                     IntertsectResult intersect = union.Intertsect(ray);
                     if(intersect.primitive != null)
                     {
-                        bitmap.SetPixel(k, i, intersect.primitive.material.CaculateColor());
+                        bitmap.SetPixel(k, i, intersect.primitive.material.CaculateColor(intersect));
                     }
                     else
                     {
