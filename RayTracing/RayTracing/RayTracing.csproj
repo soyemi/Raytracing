@@ -46,6 +46,7 @@
     <Compile Include="Core\IntersectResult.cs" />
     <Compile Include="Core\LightBase.cs" />
     <Compile Include="Core\Material.cs" />
+    <Compile Include="Core\Plane.cs" />
     <Compile Include="Core\PointLight.cs" />
     <Compile Include="MaterialBlinnPhong.cs" />
     <Compile Include="MaterialColor.cs" />
