@@ -14,6 +14,6 @@ namespace RayTracing
         {
             mainColor = Util.ColorToVec(color);
         }
-        public abstract Color CaculateColor(IntersectResult intersect);
+        public abstract Vector3 CaculateColor(IntersectResult intersect);
     }
 }

@@ -31,6 +31,8 @@ namespace RayTracing
             }
         }
 
+        public const float bias = 0.0001f;
+
 
 
         public RenderContext(int width,int height)
@@ -77,7 +79,20 @@ namespace RayTracing
                     IntersectResult intersect = union.Intersect(ray);
                     if(intersect.primitive != null)
                     {
-                        bitmap.SetPixel(k, i, intersect.primitive.material.CaculateColor(intersect));
+                        //base color
+                        Vector3 baseColor = intersect.primitive.material.CaculateColor(intersect);
+                        //add shadow
+
+                        Vector3 shadowPosition = intersect.position + bias * intersect.normal.Nor();
+                        Ray shadowRay = new Ray(shadowPosition, -Light.GetDir(shadowPosition));
+                        IntersectResult shadowResult = union.Intersect(shadowRay, intersect.primitive,true);
+                        if(shadowResult.primitive != null)
+                        {
+                            //baseColor = shadowResult.primitive.debugColor;
+                            baseColor *= 0.5f;
+                        }
+
+                        bitmap.SetPixel(k, i, Util.VecToColor(baseColor));
                     }
                     else
                     {

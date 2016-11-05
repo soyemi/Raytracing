@@ -15,6 +15,7 @@ namespace RayTracing
         {
             center = v;
             this.radius = radius;
+            castShadow = true;
         }
 
         public override IntersectResult Intersect(Ray ray)

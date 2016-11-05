@@ -10,6 +10,8 @@ namespace RayTracing
 {
     public static class Util
     {
+        private static Random m_random = new Random();
+
         public static Vector3 ColorToVec(Color color)
         {
             return new Vector3(color.R * 1.0f / 256f, color.B * 1.0f / 256f, color.G * 1.0f / 256f);
@@ -31,6 +33,23 @@ namespace RayTracing
             if (vi < min) return min;
             return vi;
 
+        }
+
+        public static float Clamp(float v,float min,float max)
+        {
+            if(v> max) return max;
+            if (v < min) return min;
+            return v;
+        }
+
+        public static float Clamp01(float v)
+        {
+            return Clamp(v, 0f, 1f);
+        }
+
+        public static float random
+        {
+            get { return (float)m_random.NextDouble(); }
         }
 
     }

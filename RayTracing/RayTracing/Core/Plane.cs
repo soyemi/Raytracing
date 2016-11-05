@@ -15,6 +15,7 @@ namespace RayTracing
         {
             this.dir = dir.Nor();
             this.point = point;
+            castShadow = false;
         }
 
         public override IntersectResult Intersect(Ray ray)

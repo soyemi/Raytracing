@@ -15,7 +15,7 @@ namespace RayTracing
             this.glossy = glossy;
         }
 
-        public override Color CaculateColor(IntersectResult intersect)
+        public override Vector3 CaculateColor(IntersectResult intersect)
         {
             Vector3 v = RenderContext.ViewPoint - intersect.position;
             Vector3 l = -RenderContext.Light.GetDir(intersect.position);
@@ -27,7 +27,7 @@ namespace RayTracing
             float ndh = Math.Max(0, n.Dot(h));
             Vector3 Ks = RenderContext.Light.color * (float) Math.Pow((double)ndh, glossy);
 
-            return Util.VecToColor(RenderContext.AmbientLight+ Kd + Ks);
+            return (RenderContext.AmbientLight + Kd + Ks).clamp();
         }
     }
 }

@@ -13,9 +13,9 @@ namespace RayTracing
         {
         }
 
-        public override Color CaculateColor(IntersectResult intersect)
+        public override Vector3 CaculateColor(IntersectResult intersect)
         {
-            return Util.VecToColor(mainColor);
+            return mainColor;
         }
 
     }

@@ -18,13 +18,17 @@ namespace RayTracing
             primitives = objs;
         }
 
-        public IntersectResult Intersect(Ray ray)
+
+
+        public IntersectResult Intersect(Ray ray,Primitive exclude = null,bool shadowCast = false)
         {
             float minDist = maxDist;
             IntersectResult finalResult = new IntersectResult();
 
             for(int i=0;i<primitives.Count;i++)
             {
+                if (primitives[i] == exclude) continue;
+                if (shadowCast && !primitives[i].castShadow) continue;
                 IntersectResult result = primitives[i].Intersect(ray);
                 if(result.primitive != null && result.distance< minDist)
                 {

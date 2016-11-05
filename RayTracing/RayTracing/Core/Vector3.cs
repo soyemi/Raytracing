@@ -40,6 +40,14 @@ namespace RayTracing
             return v * m;
         }
 
+        public Vector3 clamp()
+        {
+            this.x = Util.Clamp01(x);
+            this.y = Util.Clamp01(y);
+            this.z = Util.Clamp01(z);
+            return this;
+        }
+
         public static Vector3 operator *(Vector3 m,Vector3 n)
         {
             return new Vector3(m.x * n.x, m.y * n.y, m.z * n.z);
