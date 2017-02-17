@@ -1,0 +1,29 @@
+﻿<Window x:Class="RayTracerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RayTracerWPF"
+        mc:Ignorable="d"
+        Title="RayTracer" Height="350" Width="525">
+    <DockPanel>
+        <Menu Background="#ffeeeeee" DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="new"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Render" Name="menuRender">
+            </MenuItem>
+        </Menu>
+
+        
+        <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+            <StatusBarItem>
+                <TextBlock Text="RenderInfo"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <ScrollViewer DockPanel.Dock="Bottom">
+            <Image Name="RenderImage" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
