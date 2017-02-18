@@ -22,7 +22,7 @@
             </StatusBarItem>
         </StatusBar>
 
-        <ScrollViewer DockPanel.Dock="Bottom">
+        <ScrollViewer DockPanel.Dock="Bottom" Background="#FF7A7A7A">
             <Image Name="RenderImage" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
         </ScrollViewer>
     </DockPanel>

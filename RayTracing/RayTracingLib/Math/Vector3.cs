@@ -21,7 +21,8 @@ namespace RayTracing
         {
             get
             {
-                return (float)Math.Sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+                
+                return (float)System.Math.Sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
             }
 
         }
@@ -35,6 +36,8 @@ namespace RayTracing
         {
             return new Vector3(v.x * m, v.y * m, v.z * m);
         }
+
+
         public static Vector3 operator *(float m, Vector3 v)
         {
             return v * m;
@@ -84,29 +87,30 @@ namespace RayTracing
 
         public Vector3 Cross(Vector3 v)
         {
-            return new Vector3(this.y * v.z - this.z * v.y, this.z * v.x - this.x * v.z, this.x * v.y - this.y * v.x);
-        }
-        public static Vector3 Zero
-        {
-            get { return new Vector3(0, 0, 0); }
+            return -(new Vector3(this.y * v.z - this.z * v.y, this.z * v.x - this.x * v.z, this.x * v.y - this.y * v.x));
         }
 
-        public static Vector3 Up
+        public byte[] ToColorRGB
         {
-            get { return new Vector3(0, 1, 0); }
+            get
+            {
+                return new byte[] { (byte)System.Math.Floor(x * 255.99f), (byte)System.Math.Floor(y * 255.99f), (byte)System.Math.Floor(z * 255.99f) };
+            }
         }
-        public static Vector3 Down
+
+        public override string ToString()
         {
-            get { return new Vector3(0, -1, 0); }
+            return string.Format("({0},{1},{2})", x, y, z);
         }
-        public static Vector3 Left
-        {
-            get { return new Vector3(-1, 0, 0); }
-        }
-        public static Vector3 Right
-        {
-            get { return new Vector3(1, 0, 0); }
-        }
+
+
+        public readonly static Vector3 Zero = new Vector3(0, 0, 0);
+        public readonly static Vector3 Up = new Vector3(0, 1, 0);
+        public readonly static Vector3 Down = new Vector3(0, -1, 0);
+        public readonly static Vector3 Left = new Vector3(-1, 0, 0);
+        public readonly static Vector3 Right = new Vector3(1, 0, 0);
+        public readonly static Vector3 Forward = new Vector3(0, 0, 1);
+        public readonly static Vector3 Backward = new Vector3(0, 0, -1);
 
     }
 }

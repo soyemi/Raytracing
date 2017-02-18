@@ -24,5 +24,12 @@ namespace RayTracing
             G = (byte)g;
             B = (byte)b;
         }
+
+        public static readonly Colour White = new Colour(255, 255, 255);
+        public static readonly Colour Black = new Colour(0, 0, 0);
+
+        public static readonly Colour Red = new Colour(255, 0, 0);
+        public static readonly Colour Green = new Colour(0, 255, 0);
+        public static readonly Colour Blue = new Colour(0, 0, 255);
     }
 }

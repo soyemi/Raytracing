@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RayTracing.Tracer;
+using RayTracing.Tracers;
 
 namespace RayTracing.Geom
 {
-    class Plane : Geometry
+    public class Plane : Geometry
     {
         public Vector3 normal { get; private set; }
         public Vector3 point { get; private set; }
@@ -14,16 +14,23 @@ namespace RayTracing.Geom
         public Plane(Vector3 p, Vector3 n)
         {
             point = p;
-            normal = n;
+            normal = n.Nor();
         }
 
-        public override bool Hit(Ray ray,ref float tmin, ShadeRec s)
+        public override bool Hit(Ray ray,ref ShadeRec s)
         {
             float t = (point - ray.origin).Dot(normal) / (ray.dir.Dot(normal));
             if(t > TracerConst.kEpsilon)
             {
+                s.rayT = t;
+                //s.normal = normal;
+                //s.localHitPoint = ray.Pos(t);
+                return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }

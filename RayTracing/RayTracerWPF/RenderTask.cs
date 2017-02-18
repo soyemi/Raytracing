@@ -10,6 +10,11 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Controls;
 
+using RayTracing.Utility;
+using RayTracing.Camera;
+using RayTracing.Geom;
+using RayTracing.Tracers;
+using RayTracing;
 
 namespace RayTracerWPF
 {
@@ -23,8 +28,11 @@ namespace RayTracerWPF
         private WriteableBitmap m_targetBitmap;
 
         private System.Windows.Controls.Image img;
-
         private Image image;
+
+        private RenderContext m_context;
+
+        private byte[] m_rawData;
 
         public RenderTask(int width,int height,System.Windows.Controls.Image targetImage)
         {
@@ -40,8 +48,16 @@ namespace RayTracerWPF
 
             img = targetImage;
 
-            m_targetBitmap = new WriteableBitmap(Height, Width, 0, 0, PixelFormats.Rgb24, null);
-            image.Source = m_targetBitmap;
+            m_targetBitmap = new WriteableBitmap(Width,height , 0, 0, PixelFormats.Rgb24, null);
+            img.Source = m_targetBitmap;
+            InitRenderContext();
+        }
+
+        private void InitRenderContext()
+        {
+            m_context = new RenderContext(Width,Height);
+            m_rawData = new byte[Width * Height * 3];
+
 
         }
 
@@ -54,18 +70,34 @@ namespace RayTracerWPF
 
         private void DoRender()
         {
-            for (int y = 0;y< Height;y++)
-            {
-                for(int x= 0;x<Width;x++)
-                {
-                    m_targetBitmap.Dispatcher.Invoke(() =>
-                    {
-                        m_targetBitmap.SetPixel(x, y);
-                    });
-                }
-            }
+            m_context.Render(SetPixel);
 
             IsFinish = true;
+            Refresh();
+
+            Console.WriteLine("render done!");
+        }
+
+        private int pixelCount = 0;
+
+        private void SetPixel(int x,int y,Vector3 color)
+        {
+            int off = (x + y * Width)*3;
+            m_rawData[off] = (byte)(int)(color.x * 255f);
+            m_rawData[off+1] = (byte)(int)(color.y * 255f);
+            m_rawData[off+2] = (byte)(int)(color.z * 255f);
+
+            pixelCount++;
+            if (pixelCount % 512 == 0)
+                Refresh();
+        }
+
+        private void Refresh()
+        {
+            m_targetBitmap.Dispatcher.Invoke(() =>
+            {
+                m_targetBitmap.WritePixels(new System.Windows.Int32Rect(0, 0, Width, Height), m_rawData, Width * 3, 0);
+            });
         }
     }
 }

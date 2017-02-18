@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using RayTracing.Tracer;
+using RayTracing.Tracers;
 
 namespace RayTracing.Geom
 {
-    abstract class Geometry
+    public abstract class Geometry
     {
-        public abstract bool Hit(Ray ray,ref float tmin, ShadeRec s);
+        public abstract bool Hit(Ray ray,ref ShadeRec s);
 
         public Material material
         { get; protected set; }

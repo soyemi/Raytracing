@@ -47,7 +47,7 @@ namespace RayTracerWPF
                 MessageBox.Show("Render Not Finish");
                 return;
             }
-            m_renderTask = new RenderTask(100, 100, RenderImage);
+            m_renderTask = new RenderTask(256, 256, RenderImage);
 
 
             m_renderTask.Start();
