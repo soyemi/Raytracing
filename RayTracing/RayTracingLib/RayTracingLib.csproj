@@ -54,6 +54,7 @@
     <Compile Include="Tracers\ShadeRec.cs" />
     <Compile Include="Tracers\Tracer.cs" />
     <Compile Include="Tracers\TracerConst.cs" />
+    <Compile Include="Utility\RenderConfig.cs" />
     <Compile Include="Utility\RenderContext.cs" />
     <Compile Include="Utility\ViewPlane.cs" />
   </ItemGroup>

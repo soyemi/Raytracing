@@ -19,6 +19,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using RayTracing;
+using RayTracing.Utility;
 
 namespace RayTracerWPF
 {
@@ -31,13 +32,26 @@ namespace RayTracerWPF
 
         private RenderTask m_renderTask;
 
+
+
         public MainWindow()
         {
             InitializeComponent();
 
             menuRender.Click += MenuRender_Click;
 
+            Left = (SystemParameters.PrimaryScreenWidth - Width)*0.5f;
+            Top = (SystemParameters.PrimaryScreenHeight - Height) * 0.5f;
+        }
 
+        private RenderConfig RefreshConfig()
+        {
+            RenderConfig config = new RenderConfig();
+            config.width = int.Parse(cfgWidth.Text);
+            config.height = int.Parse(cfgHeight.Text);
+            config.sampleType =(bool)radioBtnDefault.IsChecked ? SampleType.Default : SampleType.Random;
+            config.samples = int.Parse(cfgSamples.Text);
+            return config;
         }
 
         private void MenuRender_Click(object sender, RoutedEventArgs e)
@@ -47,17 +61,24 @@ namespace RayTracerWPF
                 MessageBox.Show("Render Not Finish");
                 return;
             }
-            m_renderTask = new RenderTask(256, 256, RenderImage);
 
+            var config = RefreshConfig();
 
+            m_renderTask = new RenderTask(config, RenderImage);
+
+            m_renderTask.RenderFinish += OnRenderFinish;
             m_renderTask.Start();
         }
 
 
-        private void StartRender()
+        private void OnRenderFinish(string info)
         {
+            m_renderTask.RenderFinish -= OnRenderFinish;
+            m_renderTask = null;
 
+            Dispatcher.Invoke(() => { RenderInfoText.Text = info; });
         }
+
 
     }
 }

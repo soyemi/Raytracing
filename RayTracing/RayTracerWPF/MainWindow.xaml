@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RayTracerWPF"
         mc:Ignorable="d"
-        Title="RayTracer" Height="350" Width="525">
+        Title="RayTracer" Height="500" Width="800" VerticalAlignment="Center">
     <DockPanel>
         <Menu Background="#ffeeeeee" DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -15,15 +15,45 @@
             </MenuItem>
         </Menu>
 
-        
+
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-            <StatusBarItem>
-                <TextBlock Text="RenderInfo"></TextBlock>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Name="RenderInfoText"></TextBlock>
             </StatusBarItem>
         </StatusBar>
 
-        <ScrollViewer DockPanel.Dock="Bottom" Background="#FF7A7A7A">
-            <Image Name="RenderImage" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-        </ScrollViewer>
+        <DockPanel>
+            <StackPanel Width="150" Margin="0 0 2 0">
+                <GroupBox Header="Size">
+                    <WrapPanel>
+                        <Label Width="50">Width</Label>
+                        <TextBox Name="cfgWidth" Width="87" VerticalContentAlignment="Center">400</TextBox>
+                        <Label Width="50">Height</Label>
+                        <TextBox Name="cfgHeight" Width="87" VerticalContentAlignment="Center">300</TextBox>
+                    </WrapPanel>
+                    
+                </GroupBox>
+                
+
+                <GroupBox Header="Sample">
+                    <WrapPanel>
+                        <RadioButton Name="radioBtnDefault" VerticalAlignment="Center" IsChecked="True" GroupName="radioSampleType">
+                            Default
+                        </RadioButton>
+                        <RadioButton VerticalAlignment="Center"  GroupName="radioSampleType">
+                            Random
+                        </RadioButton>
+                        <Label Width="60">Samples</Label>
+                        <TextBox Name="cfgSamples" Width="77" VerticalContentAlignment="Center">1</TextBox>
+                    </WrapPanel>
+                </GroupBox>
+                
+
+            </StackPanel>
+            <ScrollViewer DockPanel.Dock="Right" Background="#FF7A7A7A">
+                <Image Name="RenderImage" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
+            </ScrollViewer>
+        </DockPanel>
+        
     </DockPanel>
 </Window>

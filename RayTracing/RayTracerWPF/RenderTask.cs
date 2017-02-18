@@ -21,6 +21,8 @@ namespace RayTracerWPF
     public class RenderTask
     {
 
+        public event Action<string> RenderFinish = delegate { };
+
         public bool IsFinish { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -34,37 +36,43 @@ namespace RayTracerWPF
 
         private byte[] m_rawData;
 
-        public RenderTask(int width,int height,System.Windows.Controls.Image targetImage)
+        private RenderConfig m_config;
+
+        private DateTime m_startTime;
+
+        public RenderTask(RenderConfig config ,System.Windows.Controls.Image targetImage)
         {
             IsFinish = false;
 
-            this.Width = width;
-            this.Height = height;
+            m_config = config;
+            this.Width = m_config.width;
+            this.Height = m_config.height;
 
             image = targetImage;
 
-            targetImage.Width = width;
-            targetImage.Height = height;
+            targetImage.Width = Width;
+            targetImage.Height = Height;
 
             img = targetImage;
 
-            m_targetBitmap = new WriteableBitmap(Width,height , 0, 0, PixelFormats.Rgb24, null);
+            m_targetBitmap = new WriteableBitmap(Width,Height, 0, 0, PixelFormats.Rgb24, null);
             img.Source = m_targetBitmap;
             InitRenderContext();
         }
 
         private void InitRenderContext()
         {
-            m_context = new RenderContext(Width,Height);
+            m_context = new RenderContext(m_config);
             m_rawData = new byte[Width * Height * 3];
-
 
         }
 
         public void Start()
         {
+            m_startTime = DateTime.Now;
             Thread thread = new Thread(DoRender);
             thread.Start();
+
 
         }
 
@@ -75,7 +83,11 @@ namespace RayTracerWPF
             IsFinish = true;
             Refresh();
 
-            Console.WriteLine("render done!");
+            TimeSpan elapse = DateTime.Now - m_startTime;
+
+            string renderInfo = string.Format("Total Time:{0}s", elapse.TotalSeconds);
+            RenderFinish(renderInfo);
+
         }
 
         private int pixelCount = 0;

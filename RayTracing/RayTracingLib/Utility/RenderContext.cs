@@ -21,15 +21,18 @@ namespace RayTracing.Utility
         public Tracer tracer;
 
 
-        public RenderContext(int width,int height)
+        private RenderConfig m_config;
+
+        public RenderContext(RenderConfig config)
         {
-            float aspectRatio = width *1.0f / height;
-            viewPlane = new ViewPlane(width,height,1f,2);
+            m_config = config;
+
+            float aspectRatio = config.width * 1.0f / config.height;
+            viewPlane = new ViewPlane(config.width, config.height, 1f,2);
+            viewPlane.sampleType = config.sampleType;
+            viewPlane.Samples = config.samples;
 
             camera = new PerspectiveCamera(Vector3.Zero,(new Vector3(1f,0f,5f)).Nor(),Vector3.Up, aspectRatio);
-
-            Console.WriteLine(camera.Up);
-            Console.WriteLine(camera.Right);
 
             tracer = new Tracer(this);
 
@@ -67,8 +70,18 @@ namespace RayTracing.Utility
                     {
                         for(int y=0;y<n;y++)
                         {
-                            float pw = w - (viewPlane.Width -1) * 0.5f + (x+0.5f)/n;
-                            float ph = h - (viewPlane.Height-1) * 0.5f + (y+0.5f)/n;
+                            float pw = w - (viewPlane.Width - 1) * 0.5f;
+                            float ph = h - (viewPlane.Height - 1) * 0.5f;
+                            if(viewPlane.sampleType == SampleType.Default)
+                            {
+                                pw += (x + 0.5f) / n;
+                                ph += (y + 0.5f) / n;
+                            }
+                            else
+                            {
+                                pw += Util.random;
+                                ph += Util.random;
+                            }
 
                             Ray ray = camera.CaculateRay(pw, ph);
                             L += tracer.TraceRay(ray);
