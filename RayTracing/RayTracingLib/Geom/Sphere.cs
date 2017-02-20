@@ -40,12 +40,18 @@ namespace RayTracing.Geom
                 if(t1 > TracerConst.kEpsilon)
                 {
                     sr.rayT = t1;
+                    sr.localHitPoint = ray.Pos(t1);
+                    sr.normal = (sr.localHitPoint - Center).Nor();
+
                     return true;
                 }
                 t1 = (e - b) / a * 0.5f;
                 if(t1 > TracerConst.kEpsilon)
                 {
                     sr.rayT = t1;
+                    sr.localHitPoint = ray.Pos(t1);
+                    sr.normal = (sr.localHitPoint - Center).Nor();
+
                     return true;
                 }
 

@@ -22,7 +22,7 @@ namespace RayTracing.Tracers
 
             if(sr.isHitObj)
             {
-                return sr.hitMaterial.color;
+                return sr.hitMaterial.Shade(sr);
             }
             else
             {

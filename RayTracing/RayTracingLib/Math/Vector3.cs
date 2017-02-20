@@ -17,6 +17,11 @@ namespace RayTracing
             this.z = z;
         }
 
+        public static Vector3 Ctor(float x, float y, float z)
+        {
+            return new Vector3(x, y, z);
+        }
+
         public float length
         {
             get
