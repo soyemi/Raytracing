@@ -34,34 +34,48 @@ namespace RayTracing.Utility
             viewPlane.sampleType = config.sampleType;
             viewPlane.Samples = config.samples;
 
-            camera = new PerspectiveCamera(Vector3.Zero,(new Vector3(1f,0f,5f)).Nor(),Vector3.Up, aspectRatio);
+            camera = new PerspectiveCamera(new Vector3(0,0,-5f),Vector3.Forward,Vector3.Up, 1f);
 
             tracer = new Tracer(this);
 
-            Sphere spr = new Sphere(new Vector3(0,0,1f), 0.4f);
-            spr.SetMaterial(new MatColor(ColourF.Green));
+            MatMatte matSp1 = new MatMatte(Vector3.One, ColourF.Red);
 
-            Sphere spr1 = new Sphere(new Vector3(0.5f, 0, 1f), 0.5f);
 
-            MatMatte matSp1 = new MatMatte(new Vector3(0.3f, 0.3f, 0.3f), ColourF.Red);
-            spr1.SetMaterial(matSp1);
-            spr1.tag = "s1";
+            Plane p1 = new Plane(new Vector3(0, 0, 4), Vector3.Backward);
+            p1.SetMaterial(new MatColor(ColourF.Blue));
 
-            Sphere spr2 = new Sphere(new Vector3(3f, 0, 5f), 5f);
-            spr2.SetMaterial(new MatColor(new Vector3(0.2f, 0.4f, 0.8f)));
+            Plane p2 = new Plane(new Vector3(4, 0, 4), Vector3.Left);
+            p2.SetMaterial(matSp1);
 
-            Plane p = new Plane(new Vector3(0,-0.2f,0), Vector3.Up);
-            p.SetMaterial(new MatColor(ColourF.White));
+            Plane p3 = new Plane(new Vector3(-4, 0, 4), Vector3.Right);
+            p3.SetMaterial(matSp1);
 
-            objects.Add(p);
-            objects.Add(spr);
+            Plane p4 = new Plane(new Vector3(0, -4, 4), Vector3.Up);
+            p4.SetMaterial(new MatColor(ColourF.Red));
+
+            Plane p5 = new Plane(new Vector3(0, 4, 4), Vector3.Down);
+            p5.SetMaterial(new MatColor(ColourF.Green));
+
+
+            Sphere spr1 = new Sphere(new Vector3(2, 0, 3), 2f);
+            spr1.SetMaterial(new MatMatte(ColourF.White, ColourF.White));
+
+            Sphere spr2 = new Sphere(new Vector3(-1, -3, 2.5f), 1.5f);
+            spr2.SetMaterial(new MatMatte(ColourF.White, ColourF.White,0.25f,2f));
+
+            objects.Add(p1);
+            objects.Add(p2);
+            objects.Add(p3);
+            objects.Add(p4);
+            objects.Add(p5);
+
             objects.Add(spr1);
             objects.Add(spr2);
 
             ambientLight = new Ambient(1.0f, ColourF.White);
             lights = new List<LightBase>();
 
-            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(-0.3f, -0.8f, -0.1f), ColourF.White, 1.0f);
+            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,1f,-1f), ColourF.White, 3.0f);
             lights.Add(dl);
         }
 
@@ -96,7 +110,8 @@ namespace RayTracing.Utility
                         }
                     }
                     L /= (1.0f*(n * n));
-                    
+
+                    L = ToneMapping.Uncharted2ToneMapping(L, 1.0F);
                     SetFinalPixel(w, h, L);
 
                 }

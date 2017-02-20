@@ -24,16 +24,16 @@ namespace RayTracing.Material
         public override Vector3 Shade(ShadeRec sr)
         {
             Vector3 wo = -sr.ray.dir;
-            Vector3 L =Vector3.Zero;// ambientBRDF.rho(sr, wo) * sr.context.ambientLight.L(sr);
+            Vector3 L = ambientBRDF.rho(sr, wo) * sr.context.ambientLight.L(sr);
             int lightCount = sr.context.lights.Count;
             for(int j=0;j<lightCount;j++)
             {
                 Vector3 wi = sr.context.lights[j].GetDirection(sr);
-                float nDotWi = sr.normal.Dot(wi);
-
-                L = sr.normal;
-                //if (nDotWi > 0)
-                //L += diffuseBRDF.F(sr, wo, wi) * sr.context.lights[j].L(sr) * nDotWi;
+                float nDotWi = sr.normal.Nor().Dot(wi.Nor());
+                if (nDotWi > 0)
+                {
+                     L += sr.context.lights[j].L(sr) * nDotWi * diffuseBRDF.F(sr, wo, wi);
+                }
             }
 
             return L;

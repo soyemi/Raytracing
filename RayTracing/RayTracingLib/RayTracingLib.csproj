@@ -64,6 +64,7 @@
     <Compile Include="Tracers\TracerNormal.cs" />
     <Compile Include="Utility\RenderConfig.cs" />
     <Compile Include="Utility\RenderContext.cs" />
+    <Compile Include="Utility\ToneMapping.cs" />
     <Compile Include="Utility\ViewPlane.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -67,6 +67,11 @@ namespace RayTracing
             return new Vector3(v.x / m, v.y / m, v.z / m);
         }
 
+        public static Vector3 operator /(Vector3 v, Vector3 m)
+        {
+            return new Vector3(v.x / m.x, v.y / m.y, v.z / m.z);
+        }
+
         public static Vector3 operator +(Vector3 a, Vector3 b)
         {
             return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
@@ -110,6 +115,8 @@ namespace RayTracing
 
 
         public readonly static Vector3 Zero = new Vector3(0, 0, 0);
+        public readonly static Vector3 One = new Vector3(1, 1, 1);
+
         public readonly static Vector3 Up = new Vector3(0, 1, 0);
         public readonly static Vector3 Down = new Vector3(0, -1, 0);
         public readonly static Vector3 Left = new Vector3(-1, 0, 0);

@@ -9,7 +9,7 @@ namespace RayTracing.Tracers
     public class Tracer
     {
 
-        private RenderContext m_context;
+        protected RenderContext m_context;
 
         public Tracer(RenderContext context)
         {

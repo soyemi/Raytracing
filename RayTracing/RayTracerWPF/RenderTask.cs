@@ -40,6 +40,8 @@ namespace RayTracerWPF
 
         private DateTime m_startTime;
 
+        private int m_substep = 1000;
+
         public RenderTask(RenderConfig config ,System.Windows.Controls.Image targetImage)
         {
             IsFinish = false;
@@ -64,6 +66,7 @@ namespace RayTracerWPF
         {
             m_context = new RenderContext(m_config);
             m_rawData = new byte[Width * Height * 3];
+            m_substep = Width * Height * 3 / 10;
 
         }
 
@@ -100,7 +103,7 @@ namespace RayTracerWPF
             m_rawData[off+2] = (byte)(int)(color.z * 255f);
 
             pixelCount++;
-            if (pixelCount % 512 == 0)
+            if (pixelCount % m_substep == 0)
                 Refresh();
         }
 

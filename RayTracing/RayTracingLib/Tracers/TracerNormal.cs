@@ -16,7 +16,17 @@ namespace RayTracing.Tracers
 
         public override Vector3 TraceRay(Ray ray)
         {
-            return base.TraceRay(ray);
+            ShadeRec sr = m_context.HitObjects(ray);
+
+            if (sr.isHitObj)
+            {
+                Vector3 normal = sr.normal.Nor();
+                return 0.5f * (normal + Vector3.One);
+            }
+            else
+            {
+                return ColourF.Black;
+            }
         }
     }
 }

@@ -17,6 +17,8 @@ namespace RayTracing.Light
             this.dir = dir.Nor();
             this.ls = attune;
             this.color = color;
+
+            Console.WriteLine(ls * color);
         }
 
         public override Vector3 GetDirection(ShadeRec sr)
