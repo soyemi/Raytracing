@@ -23,8 +23,8 @@ namespace RayTracing.Geom
             if(t > TracerConst.kEpsilon)
             {
                 s.rayT = t;
-                //s.normal = normal;
-                //s.localHitPoint = ray.Pos(t);
+                s.normal = normal;
+                s.localHitPoint = ray.Pos(t);
                 return true;
             }
             else

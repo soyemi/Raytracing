@@ -9,12 +9,15 @@ namespace RayTracing.Geom
 {
     public abstract class Geometry
     {
+
+        public string tag = null;
+
         public abstract bool Hit(Ray ray,ref ShadeRec s);
 
-        public Material material
+        public MaterialBase material
         { get; protected set; }
 
-        public void SetMaterial(Material mat)
+        public void SetMaterial(MaterialBase mat)
         {
             material = mat;
         }

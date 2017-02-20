@@ -6,6 +6,8 @@ using System.Text;
 using RayTracing.Camera;
 using RayTracing.Geom;
 using RayTracing.Tracers;
+using RayTracing.Material;
+using RayTracing.Light;
 namespace RayTracing.Utility
 {
     public class RenderContext
@@ -16,10 +18,10 @@ namespace RayTracing.Utility
         List<Geometry> objects = new List<Geometry>();
 
         public List<Geometry> RenderObjects { get { return objects; } }
-
         public CameraBase camera;
         public Tracer tracer;
-
+        public LightBase ambientLight;
+        public List<LightBase> lights;
 
         private RenderConfig m_config;
 
@@ -37,22 +39,30 @@ namespace RayTracing.Utility
             tracer = new Tracer(this);
 
             Sphere spr = new Sphere(new Vector3(0,0,1f), 0.4f);
-            spr.SetMaterial(new Material(ColourF.Green));
+            spr.SetMaterial(new MatColor(ColourF.Green));
 
             Sphere spr1 = new Sphere(new Vector3(0.5f, 0, 1f), 0.5f);
-            spr1.SetMaterial(new Material(ColourF.Red));
+
+            MatMatte matSp1 = new MatMatte(new Vector3(0.3f, 0.3f, 0.3f), ColourF.Red);
+            spr1.SetMaterial(matSp1);
+            spr1.tag = "s1";
 
             Sphere spr2 = new Sphere(new Vector3(3f, 0, 5f), 5f);
-            spr2.SetMaterial(new Material(new Vector3(0.2f, 0.4f, 0.8f)));
+            spr2.SetMaterial(new MatColor(new Vector3(0.2f, 0.4f, 0.8f)));
 
             Plane p = new Plane(new Vector3(0,-0.2f,0), Vector3.Up);
-            p.SetMaterial(new Material(ColourF.White));
+            p.SetMaterial(new MatColor(ColourF.White));
 
             objects.Add(p);
             objects.Add(spr);
             objects.Add(spr1);
             objects.Add(spr2);
 
+            ambientLight = new Ambient(1.0f, ColourF.White);
+            lights = new List<LightBase>();
+
+            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(-0.3f, -0.8f, -0.1f), ColourF.White, 1.0f);
+            lights.Add(dl);
         }
 
         public void Render(Action<int,int,Vector3> SetFinalPixel)
@@ -64,8 +74,6 @@ namespace RayTracing.Utility
                 for(int w =0;w < viewPlane.Width;w++)
                 {
                     L = Vector3.Zero;
-                    
-
                     for(int x= 0;x<n;x++)
                     {
                         for(int y=0;y<n;y++)
@@ -87,7 +95,7 @@ namespace RayTracing.Utility
                             L += tracer.TraceRay(ray);
                         }
                     }
-                    L /= (n * n);
+                    L /= (1.0f*(n * n));
                     
                     SetFinalPixel(w, h, L);
 
@@ -97,8 +105,11 @@ namespace RayTracing.Utility
 
         public ShadeRec HitObjects(Ray ray)
         {
-            ShadeRec sr = new ShadeRec();
-            Material mat = null;
+            ShadeRec sr = new ShadeRec(this);
+            sr.ray = ray;
+
+            MaterialBase mat = null;
+            Vector3 normal = Vector3.Zero;
 
             float t = TracerConst.kMaxDist;
             
@@ -110,6 +121,7 @@ namespace RayTracing.Utility
                     {
                         t = sr.rayT;
                         sr.isHitObj = true;
+                        normal = sr.normal;
                         mat = o.material;
                     }
                 }
@@ -118,6 +130,7 @@ namespace RayTracing.Utility
             if (sr.isHitObj)
             {
                 sr.hitMaterial = mat;
+                sr.normal = normal;
             }
 
             return sr;
