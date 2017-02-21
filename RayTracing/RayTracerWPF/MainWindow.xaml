@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RayTracerWPF"
         mc:Ignorable="d"
-        Title="RayTracer" Height="500" Width="800" VerticalAlignment="Center">
+        Title="RayTracer" Height="700" Width="1000" VerticalAlignment="Center">
     <DockPanel>
         <Menu Background="#ffeeeeee" DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -27,9 +27,9 @@
                 <GroupBox Header="Size">
                     <WrapPanel>
                         <Label Width="50">Width</Label>
-                        <TextBox Name="cfgWidth" Width="87" VerticalContentAlignment="Center">400</TextBox>
+                        <TextBox Name="cfgWidth" Width="87" VerticalContentAlignment="Center">800</TextBox>
                         <Label Width="50">Height</Label>
-                        <TextBox Name="cfgHeight" Width="87" VerticalContentAlignment="Center">300</TextBox>
+                        <TextBox Name="cfgHeight" Width="87" VerticalContentAlignment="Center">600</TextBox>
                     </WrapPanel>
                     
                 </GroupBox>

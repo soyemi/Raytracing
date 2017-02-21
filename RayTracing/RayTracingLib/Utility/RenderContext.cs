@@ -34,7 +34,7 @@ namespace RayTracing.Utility
             viewPlane.sampleType = config.sampleType;
             viewPlane.Samples = config.samples;
 
-            camera = new PerspectiveCamera(new Vector3(0,0,-5f),Vector3.Forward,Vector3.Up, 1f);
+            camera = new PerspectiveCamera(new Vector3(0,0,-5f),Vector3.Forward,Vector3.Up,viewPlane,60f);
 
             tracer = new Tracer(this);
 
@@ -105,7 +105,7 @@ namespace RayTracing.Utility
                                 ph += Util.random;
                             }
 
-                            Ray ray = camera.CaculateRay(pw, ph);
+                            Ray ray = camera.CaculateRay(pw, ph,viewPlane);
                             L += tracer.TraceRay(ray);
                         }
                     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using RayTracing.Utility;
 namespace RayTracing.Camera
 {
     public abstract class CameraBase
@@ -12,12 +13,15 @@ namespace RayTracing.Camera
         public Vector3 Forward = Vector3.Forward;
         public Vector3 Right;
 
-        public CameraBase(Vector3 pos,Vector3 forward,Vector3 up)
+        public float AspectRatio;
+        public CameraBase(Vector3 pos,Vector3 forward,Vector3 up,ViewPlane plane)
         {
             Position = pos;
             Forward = forward;
             Right = Forward.Cross(up);
             Up = Forward.Cross(Right);
+
+            AspectRatio = plane.Width*1.0f / plane.Height;
 
             Forward = Forward.Nor();
             Right = Right.Nor();
@@ -29,6 +33,6 @@ namespace RayTracing.Camera
             Right = Forward.Cross(Up);
         }
 
-        public abstract Ray CaculateRay(float x,float y);
+        public abstract Ray CaculateRay(float x,float y,ViewPlane plane = null);
     }
 }
