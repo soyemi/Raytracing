@@ -57,10 +57,10 @@ namespace RayTracing.Utility
             p5.SetMaterial(new MatColor(ColourF.Green));
 
 
-            Sphere spr1 = new Sphere(new Vector3(2, 0, 3), 2f);
+            Sphere spr1 = new Sphere(new Vector3(2, 0, 3), 1f);
             spr1.SetMaterial(new MatMatte(ColourF.White, ColourF.White));
 
-            Sphere spr2 = new Sphere(new Vector3(-1, -3, 2.5f), 1.5f);
+            Sphere spr2 = new Sphere(new Vector3(-1, -3, 2.5f), 0.75f);
             spr2.SetMaterial(new MatMatte(ColourF.White, ColourF.White,0.25f,2f));
 
             objects.Add(p1);

@@ -23,7 +23,7 @@ namespace RayTracing.Camera
 
         public override Ray CaculateRay(float x, float y,ViewPlane plane)
         {
-            Vector3 dir =(AspectRatio * Right * x / plane.Width + Up * y / plane.Height) + Forward;
+            Vector3 dir =(AspectRatio * Right * x / plane.Width + Up * y / plane.Height)* fovR + Forward;
             Ray ray = new Ray(Position, dir);
             return ray;
         }
