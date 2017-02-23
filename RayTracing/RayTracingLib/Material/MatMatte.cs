@@ -12,13 +12,13 @@ namespace RayTracing.Material
     class MatMatte :MaterialBase
     {
 
-        BRFDlambertain ambientBRDF;
-        BRFDlambertain diffuseBRDF;
+        BRDFlambertain ambientBRDF;
+        BRDFlambertain diffuseBRDF;
 
         public MatMatte(Vector3 Ca,Vector3 Cd, float Ka = 0.25f, float Kd = 0.75f)
         {
-            ambientBRDF = new BRFDlambertain(Ka,Ca);
-            diffuseBRDF = new BRFDlambertain(Kd,Cd);
+            ambientBRDF = new BRDFlambertain(Ka,Ca);
+            diffuseBRDF = new BRDFlambertain(Kd,Cd);
         }
 
         public override Vector3 Shade(ShadeRec sr)

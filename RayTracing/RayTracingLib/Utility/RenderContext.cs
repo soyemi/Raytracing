@@ -38,11 +38,11 @@ namespace RayTracing.Utility
 
             tracer = new Tracer(this);
 
-            MatMatte matSp1 = new MatMatte(Vector3.One, ColourF.Red);
+            MatMatte matSp1 = new MatMatte(ColourF.White, ColourF.White);
 
 
             Plane p1 = new Plane(new Vector3(0, 0, 4), Vector3.Backward);
-            p1.SetMaterial(new MatColor(ColourF.Blue));
+            p1.SetMaterial(matSp1);
 
             Plane p2 = new Plane(new Vector3(4, 0, 4), Vector3.Left);
             p2.SetMaterial(matSp1);
@@ -51,23 +51,23 @@ namespace RayTracing.Utility
             p3.SetMaterial(matSp1);
 
             Plane p4 = new Plane(new Vector3(0, -4, 4), Vector3.Up);
-            p4.SetMaterial(new MatColor(ColourF.Red));
+            p4.SetMaterial(matSp1);
 
             Plane p5 = new Plane(new Vector3(0, 4, 4), Vector3.Down);
-            p5.SetMaterial(new MatColor(ColourF.Green));
+            p5.SetMaterial(matSp1);
 
 
             Sphere spr1 = new Sphere(new Vector3(2, 0, 3), 1f);
-            spr1.SetMaterial(new MatMatte(ColourF.White, ColourF.White));
+            spr1.SetMaterial(matSp1);
 
             Sphere spr2 = new Sphere(new Vector3(-1, -3, 2.5f), 0.75f);
-            spr2.SetMaterial(new MatMatte(ColourF.White, ColourF.White,0.25f,2f));
+            spr2.SetMaterial(matSp1);
 
             objects.Add(p1);
-            objects.Add(p2);
-            objects.Add(p3);
-            objects.Add(p4);
-            objects.Add(p5);
+            //objects.Add(p2);
+            //objects.Add(p3);
+            //objects.Add(p4);
+            //objects.Add(p5);
 
             objects.Add(spr1);
             objects.Add(spr2);
@@ -75,8 +75,11 @@ namespace RayTracing.Utility
             ambientLight = new Ambient(1.0f, ColourF.White);
             lights = new List<LightBase>();
 
-            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,1f,-1f), ColourF.White, 3.0f);
-            lights.Add(dl);
+            PointLight pl = new PointLight(Vector3.Ctor(0f, 3f, 2.5f), ColourF.White, 20.0f,5f);
+
+            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,1f,-1f), ColourF.White, 10.0f);
+            //lights.Add(dl);
+            lights.Add(pl);
         }
 
         public void Render(Action<int,int,Vector3> SetFinalPixel)

@@ -6,7 +6,7 @@ using RayTracing.Tracers;
 
 namespace RayTracing.BRDFs
 {
-    public class BRFDlambertain :BRDF
+    public class BRDFlambertain :BRDF
     {
         /// <summary>
         /// Radiance Coefficient
@@ -17,7 +17,7 @@ namespace RayTracing.BRDFs
         /// </summary>
         public Vector3 Cd;
 
-        public BRFDlambertain(float Kd,Vector3 Cd)
+        public BRDFlambertain(float Kd,Vector3 Cd)
         {
             this.Kd = Kd;
             this.Cd = Cd;
