@@ -18,16 +18,20 @@ namespace RayTracing.Light
             this.ls = attune;
             this.color = color;
 
-            Console.WriteLine(ls * color);
         }
 
         public override Vector3 GetDirection(ShadeRec sr)
         {
-            return dir;
+            return -dir;
         }
         public override Vector3 L(ShadeRec sr)
         {
             return ls * color;
+        }
+
+        public override float GetDistance(Vector3 pos)
+        {
+            return float.MaxValue;
         }
     }
 }

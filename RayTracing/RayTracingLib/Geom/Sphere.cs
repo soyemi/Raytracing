@@ -58,5 +58,39 @@ namespace RayTracing.Geom
                 return false;
             }
         }
+
+        public override bool ShadowHit(Ray shadowRay, ref float t)
+        {
+            Vector3 s = shadowRay.origin - Center;
+            float a = shadowRay.dir.sqrLeng();
+            float b = 2 * s.Dot(shadowRay.dir);
+            float c = s.sqrLeng() - Radius * Radius;
+
+            float delta = b * b - 4 * a * c;
+
+            if (delta <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                float e = (float)Math.Sqrt(delta);
+                float t1 = -(b + e) / a * 0.5f;
+
+                if (t1 > TracerConst.kEpsilon)
+                {
+                    t = t1;
+                    return true;
+                }
+                t1 = (e - b) / a * 0.5f;
+                if (t1 > TracerConst.kEpsilon)
+                {
+                    t = t1;
+                    return true;
+                }
+
+                return false;
+            }
+        }
     }
 }

@@ -26,13 +26,21 @@ namespace RayTracing.Material
             Vector3 wo = -sr.ray.dir;
             Vector3 L = ambientBRDF.rho(sr, wo) * sr.context.ambientLight.L(sr);
             int lightCount = sr.context.lights.Count;
-            for(int j=0;j<lightCount;j++)
+            for (int j = 0; j < lightCount; j++)
             {
-                Vector3 wi = sr.context.lights[j].GetDirection(sr);
+                var light = sr.context.lights[j];
+                Vector3 wi = light.GetDirection(sr);
                 float nDotWi = sr.normal.Nor().Dot(wi.Nor());
                 if (nDotWi > 0)
                 {
-                     L += sr.context.lights[j].L(sr) * nDotWi * diffuseBRDF.F(sr, wo, wi);
+                    bool inshadow = false;
+                    if(light.CAST_SHADOW)
+                    {
+                        Ray shadowRay = new Ray(sr.localHitPoint + sr.normal * TracerConst.kEpsilon, wi);
+                        inshadow = light.ShadowCheck(shadowRay, sr);
+                    }
+                    if(!inshadow)
+                        L += light.L(sr) * nDotWi * diffuseBRDF.F(sr, wo, wi);
                 }
             }
 

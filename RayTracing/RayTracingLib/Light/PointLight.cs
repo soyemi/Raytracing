@@ -40,5 +40,10 @@ namespace RayTracing.Light
 
             return m_atten * m_color;
         }
+
+        public override float GetDistance(Vector3 pos)
+        {
+            return (m_pos - pos).length;
+        }
     }
 }

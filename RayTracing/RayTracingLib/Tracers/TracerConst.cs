@@ -7,7 +7,7 @@ namespace RayTracing.Tracers
 {
      static class TracerConst
     {
-        public const double kEpsilon = 0.0001d;
+        public const float kEpsilon = 0.00001f;
         public const float kMaxDist = 10000f;
 
         public const float PI = 3.1415926535897932384f;

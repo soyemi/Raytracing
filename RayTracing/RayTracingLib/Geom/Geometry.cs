@@ -14,6 +14,8 @@ namespace RayTracing.Geom
 
         public abstract bool Hit(Ray ray,ref ShadeRec s);
 
+        public abstract bool ShadowHit(Ray shadowRay, ref float t);
+
         public MaterialBase material
         { get; protected set; }
 
@@ -21,5 +23,6 @@ namespace RayTracing.Geom
         {
             material = mat;
         }
+
     }
 }

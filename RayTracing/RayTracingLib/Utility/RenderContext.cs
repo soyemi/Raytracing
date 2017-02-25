@@ -44,30 +44,20 @@ namespace RayTracing.Utility
             Plane p1 = new Plane(new Vector3(0, 0, 4), Vector3.Backward);
             p1.SetMaterial(matSp1);
 
-            Plane p2 = new Plane(new Vector3(4, 0, 4), Vector3.Left);
-            p2.SetMaterial(matSp1);
-
-            Plane p3 = new Plane(new Vector3(-4, 0, 4), Vector3.Right);
-            p3.SetMaterial(matSp1);
-
-            Plane p4 = new Plane(new Vector3(0, -4, 4), Vector3.Up);
-            p4.SetMaterial(matSp1);
-
-            Plane p5 = new Plane(new Vector3(0, 4, 4), Vector3.Down);
-            p5.SetMaterial(matSp1);
+            Plane pup = new Plane(new Vector3(0, -1f, 0f), new Vector3(0,1f,0f));
+            pup.SetMaterial(matSp1);
 
 
-            Sphere spr1 = new Sphere(new Vector3(2, 0, 3), 1f);
+            Sphere spr1 = new Sphere(new Vector3(2, 1.3f, 0f), 1.3f);
             spr1.SetMaterial(matSp1);
 
-            Sphere spr2 = new Sphere(new Vector3(-1, -3, 2.5f), 0.75f);
-            spr2.SetMaterial(matSp1);
+            MatPhong matphong = new MatPhong(0.25f,0.7f,0.3f,ColourF.White,ColourF.Red,ColourF.White,100F);
+
+            Sphere spr2 = new Sphere(new Vector3(1f, -1f, -0.5f), 0.75f);
+            spr2.SetMaterial(matphong);
 
             objects.Add(p1);
-            //objects.Add(p2);
-            //objects.Add(p3);
-            //objects.Add(p4);
-            //objects.Add(p5);
+            objects.Add(pup);
 
             objects.Add(spr1);
             objects.Add(spr2);
@@ -75,10 +65,12 @@ namespace RayTracing.Utility
             ambientLight = new Ambient(1.0f, ColourF.White);
             lights = new List<LightBase>();
 
-            PointLight pl = new PointLight(Vector3.Ctor(0f, 3f, 2.5f), ColourF.White, 20.0f,5f);
+            PointLight pl = new PointLight(Vector3.Ctor(-1f, 2.5f, 2.3f), ColourF.White, 10f,5f);
+            pl.CAST_SHADOW = true;
 
-            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,1f,-1f), ColourF.White, 10.0f);
-            //lights.Add(dl);
+            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,-1f,0.2f), ColourF.White, 2.0f);
+            dl.CAST_SHADOW = true;
+            lights.Add(dl);
             lights.Add(pl);
         }
 
@@ -128,6 +120,7 @@ namespace RayTracing.Utility
 
             MaterialBase mat = null;
             Vector3 normal = Vector3.Zero;
+            Vector3 localhit = Vector3.Zero;
 
             float t = TracerConst.kMaxDist;
             
@@ -141,6 +134,7 @@ namespace RayTracing.Utility
                         sr.isHitObj = true;
                         normal = sr.normal;
                         mat = o.material;
+                        localhit = sr.localHitPoint;
                     }
                 }
             }
@@ -149,6 +143,7 @@ namespace RayTracing.Utility
             {
                 sr.hitMaterial = mat;
                 sr.normal = normal;
+                sr.localHitPoint = localhit;
             }
 
             return sr;
