@@ -65,6 +65,10 @@ namespace RayTracing.Utility
             MatPhong matbox1 = new MatPhong(0.25f, 1.0f, 0.5f, ColourF.White, Vector3.Ctor(0.2f, 0.3f, 1.0f), ColourF.White, 20f);
             box1.SetMaterial(matbox1);
 
+            Disk disk1 = new Disk(Vector3.Ctor(0f, 1f, -0.53f), Vector3.Ctor(-0.2f,0.5f,1f), 0.3f);
+            disk1.SetMaterial(matSp1);
+            objects.Add(disk1);
+
             objects.Add(p1);
             objects.Add(pup);
 
