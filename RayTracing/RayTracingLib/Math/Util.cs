@@ -50,5 +50,10 @@ namespace RayTracing
             get { return (float)m_random.NextDouble(); }
         }
 
+        public static int randomInt
+        {
+            get { return m_random.Next(); }
+        }
+
     }
 }

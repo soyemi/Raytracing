@@ -49,7 +49,6 @@ namespace RayTracerWPF
             RenderConfig config = new RenderConfig();
             config.width = int.Parse(cfgWidth.Text);
             config.height = int.Parse(cfgHeight.Text);
-            config.sampleType =(bool)radioBtnDefault.IsChecked ? SampleType.Default : SampleType.Random;
             config.samples = int.Parse(cfgSamples.Text);
             return config;
         }

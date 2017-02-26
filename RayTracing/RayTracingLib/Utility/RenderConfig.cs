@@ -7,7 +7,6 @@ namespace RayTracing.Utility
 {
     public class RenderConfig
     {
-        public SampleType sampleType = SampleType.Default;
         public int width = 128;
         public int height = 128;
         public int samples = 1;

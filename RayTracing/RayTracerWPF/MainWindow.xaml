@@ -50,7 +50,7 @@
                 
 
             </StackPanel>
-            <ScrollViewer DockPanel.Dock="Right" Background="#FF7A7A7A">
+            <ScrollViewer DockPanel.Dock="Right" Background="#FF7A7A7A" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <Image Name="RenderImage" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
             </ScrollViewer>
         </DockPanel>

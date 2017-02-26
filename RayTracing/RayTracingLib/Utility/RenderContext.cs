@@ -8,6 +8,7 @@ using RayTracing.Geom;
 using RayTracing.Tracers;
 using RayTracing.Material;
 using RayTracing.Light;
+using RayTracing.Sampler;
 namespace RayTracing.Utility
 {
     public class RenderContext
@@ -31,8 +32,8 @@ namespace RayTracing.Utility
 
             float aspectRatio = config.width * 1.0f / config.height;
             viewPlane = new ViewPlane(config.width, config.height, 1f,2);
-            viewPlane.sampleType = config.sampleType;
-            viewPlane.Samples = config.samples;
+            viewPlane.SAMPLES = config.samples;
+            viewPlane.SetSampler(new NRockSampler());
 
             ToneMapping.type = ToneMapping.ToneMappingType.ACES;
 
@@ -92,38 +93,28 @@ namespace RayTracing.Utility
         public void Render(Action<int,int,Vector3> SetFinalPixel)
         {
             Vector3 L;
-            int n = viewPlane.Samples;
+            int n = viewPlane.SAMPLER.NUM_SAMPLES;
             for(int h =0;h<viewPlane.Height; h++)
             {
                 for(int w =0;w < viewPlane.Width;w++)
                 {
                     L = Vector3.Zero;
-                    for(int x= 0;x<n;x++)
+                    float pw = w - (viewPlane.Width - 1) * 0.5f;
+                    float ph = h - (viewPlane.Height - 1) * 0.5f;
+
+                    for (int j=0;j<n;j++)
                     {
-                        for(int y=0;y<n;y++)
-                        {
-                            float pw = w - (viewPlane.Width - 1) * 0.5f;
-                            float ph = h - (viewPlane.Height - 1) * 0.5f;
-                            if(viewPlane.sampleType == SampleType.Default)
-                            {
-                                pw += (x + 0.5f) / n;
-                                ph += (y + 0.5f) / n;
-                            }
-                            else
-                            {
-                                pw += Util.random;
-                                ph += Util.random;
-                            }
+                        Vector3 sp = viewPlane.SAMPLER.SampleUnitSquare(j);
+                        sp.x += pw;
+                        sp.y += ph;
 
-                            Ray ray = camera.CaculateRay(pw, ph,viewPlane);
-                            L += tracer.TraceRay(ray);
-                        }
+                        Ray ray = camera.CaculateRay(sp.x, sp.y, viewPlane);
+                        L += tracer.TraceRay(ray);
                     }
-                    L /= (1.0f*(n * n));
 
+                    L /= (1.0f*n);
                     L = ToneMapping.Caculate(L, 1.0F);
                     SetFinalPixel(w, h, L);
-
                 }
             }
         }
