@@ -44,7 +44,7 @@
                             Random
                         </RadioButton>
                         <Label Width="60">Samples</Label>
-                        <TextBox Name="cfgSamples" Width="77" VerticalContentAlignment="Center">1</TextBox>
+                        <TextBox Name="cfgSamples" Width="77" VerticalContentAlignment="Center">16</TextBox>
                     </WrapPanel>
                 </GroupBox>
                 

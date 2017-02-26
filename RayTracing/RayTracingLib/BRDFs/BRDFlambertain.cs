@@ -22,7 +22,6 @@ namespace RayTracing.BRDFs
             this.Kd = Kd;
             this.Cd = Cd;
 
-            Console.WriteLine(Kd * Cd);
         }
 
         public override Vector3 F(ShadeRec sr, Vector3 wo, Vector3 wi)

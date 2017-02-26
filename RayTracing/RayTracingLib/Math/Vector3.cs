@@ -124,5 +124,7 @@ namespace RayTracing
         public readonly static Vector3 Forward = new Vector3(0, 0, 1);
         public readonly static Vector3 Backward = new Vector3(0, 0, -1);
 
+        public readonly static Vector3 UpJitted = new Vector3(0.0021f, 1.0f, 0.0008f).Nor();
+
     }
 }

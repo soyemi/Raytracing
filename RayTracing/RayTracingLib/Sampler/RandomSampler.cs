@@ -9,11 +9,12 @@ namespace RayTracing.Sampler
     {
         public RandomSampler()
         {
+
         }
 
         protected override void setSamplePoint(int i)
         {
-            m_samples[i] = Vector3.Ctor(Util.random - 0.5f, Util.random - 0.5f, 0);
+            m_samples[i] = Vector3.Ctor(Util.random, Util.random, 0);
         }
     }
 }

@@ -17,7 +17,6 @@ namespace RayTracing.Camera
             this.fov = fov;
             fovR =(float) Math.Tan(fov / 360f * TracerConst.PI) *2f;
 
-            Console.WriteLine(forward);
         }
 
 

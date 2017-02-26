@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -55,6 +56,7 @@
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
     <Compile Include="Light\PointLight.cs" />
+    <Compile Include="Material\MatAmbientOccluder.cs" />
     <Compile Include="Material\MatColor.cs" />
     <Compile Include="Material\MaterialBase.cs" />
     <Compile Include="Material\MatMatte.cs" />
@@ -64,9 +66,11 @@
     <Compile Include="Math\Util.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sampler\BlurSampler.cs" />
     <Compile Include="Sampler\JitteredSampler.cs" />
     <Compile Include="Sampler\NRockSampler.cs" />
     <Compile Include="Sampler\RandomSampler.cs" />
+    <Compile Include="Sampler\RegularSampler.cs" />
     <Compile Include="Sampler\SamplerBase.cs" />
     <Compile Include="Tracers\Ray.cs" />
     <Compile Include="Tracers\ShadeRec.cs" />

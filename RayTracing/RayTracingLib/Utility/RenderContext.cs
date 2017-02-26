@@ -26,6 +26,7 @@ namespace RayTracing.Utility
 
         private RenderConfig m_config;
 
+
         public RenderContext(RenderConfig config)
         {
             m_config = config;
@@ -33,7 +34,7 @@ namespace RayTracing.Utility
             float aspectRatio = config.width * 1.0f / config.height;
             viewPlane = new ViewPlane(config.width, config.height, 1f,2);
             viewPlane.SAMPLES = config.samples;
-            viewPlane.SetSampler(new NRockSampler());
+            viewPlane.SetSampler(new JitteredSampler());
 
             ToneMapping.type = ToneMapping.ToneMappingType.ACES;
 
@@ -41,20 +42,25 @@ namespace RayTracing.Utility
 
             tracer = new Tracer(this);
 
+            MatAmbientOccluder matao = new MatAmbientOccluder();
+
             MatMatte matSp1 = new MatMatte(ColourF.White, ColourF.White);
 
+            MatPhong matbox1 = new MatPhong(0.25f, 1.0f, 0.5f, ColourF.White, Vector3.Ctor(0.2f, 0.3f, 1.0f), ColourF.White, 20f);
+            MatPhong matphong = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.Red, ColourF.White, 100F);
+            MatPhong matphongW = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.White, ColourF.White, 10F);
+            MatPhong matphongg = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.Green, ColourF.White, 50f);
 
             Plane p1 = new Plane(new Vector3(0, 0, 4), Vector3.Backward);
             p1.SetMaterial(matSp1);
 
             Plane pup = new Plane(new Vector3(0, -1f, 0f), new Vector3(0,1f,0f));
-            pup.SetMaterial(matSp1);
+            pup.SetMaterial(matphongW);
 
-
-            Sphere spr1 = new Sphere(new Vector3(2, 1.3f, 0f), 1.3f);
+            Sphere spr1 = new Sphere(new Vector3(2, 0f, 0f), 1.3f);
             spr1.SetMaterial(matSp1);
 
-            MatPhong matphong = new MatPhong(0.25f,0.7f,0.3f,ColourF.White,ColourF.Red,ColourF.White,100F);
+            
 
             Sphere spr2 = new Sphere(new Vector3(1f, -1f, -0.5f), 0.75f);
             spr2.SetMaterial(matphong);
@@ -63,22 +69,28 @@ namespace RayTracing.Utility
             spr3.SetMaterial(matphong);
 
             AxisAlignedBox box1 = new AxisAlignedBox(Vector3.Ctor(-2.5f, -2f, -1f), Vector3.Ctor(1f, 3f, 2f));
-            MatPhong matbox1 = new MatPhong(0.25f, 1.0f, 0.5f, ColourF.White, Vector3.Ctor(0.2f, 0.3f, 1.0f), ColourF.White, 20f);
             box1.SetMaterial(matbox1);
 
             Disk disk1 = new Disk(Vector3.Ctor(0f, 1f, -0.53f), Vector3.Ctor(-0.2f,0.5f,1f), 0.3f);
             disk1.SetMaterial(matSp1);
-            objects.Add(disk1);
+            //objects.Add(disk1);
 
-            objects.Add(p1);
+            //objects.Add(p1);
             objects.Add(pup);
 
             objects.Add(spr1);
             objects.Add(spr2);
-            objects.Add(spr3);
-            objects.Add(box1);
+           // objects.Add(spr3);
+            //objects.Add(box1);
 
-            ambientLight = new Ambient(1.0f, ColourF.White);
+           
+            spr1.SetMaterial(matphongg);
+
+            AmbientOccluder ao = new AmbientOccluder(Vector3.One * 0.1f, Vector3.One, 0.3f);
+            ao.SetSampler(new JitteredSampler(), config.samples);
+
+
+            ambientLight = ao;
             lights = new List<LightBase>();
 
             PointLight pl = new PointLight(Vector3.Ctor(-1f, 2.5f, 2.3f), ColourF.White, 10f,5f);
@@ -104,9 +116,9 @@ namespace RayTracing.Utility
 
                     for (int j=0;j<n;j++)
                     {
-                        Vector3 sp = viewPlane.SAMPLER.SampleUnitSquare(j);
-                        sp.x += pw;
-                        sp.y += ph;
+                        Vector3 sp = viewPlane.SAMPLER.SampleUnitSquare();
+                        sp.x += (pw-0.5f);
+                        sp.y += (ph-0.5f);
 
                         Ray ray = camera.CaculateRay(sp.x, sp.y, viewPlane);
                         L += tracer.TraceRay(ray);
