@@ -9,6 +9,7 @@ namespace RayTracing.Geom
 {
     public abstract class Geometry
     {
+        public BoundingBox m_bbox;
 
         public string tag = null;
 

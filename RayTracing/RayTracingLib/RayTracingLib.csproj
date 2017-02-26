@@ -44,6 +44,8 @@
     <Compile Include="Camera\CameraBase.cs" />
     <Compile Include="Camera\PerspectiveCamera.cs" />
     <Compile Include="Camera\RectCamera.cs" />
+    <Compile Include="Geom\AxisAlignedBox.cs" />
+    <Compile Include="Geom\BoundingBox.cs" />
     <Compile Include="Geom\Geometry.cs" />
     <Compile Include="Geom\Plane.cs" />
     <Compile Include="Geom\Sphere.cs" />

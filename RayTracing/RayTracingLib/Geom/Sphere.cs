@@ -16,11 +16,14 @@ namespace RayTracing.Geom
             this.Center = center;
             this.Radius = radius;
 
+            m_bbox = new BoundingBox(center - Vector3.One*radius,center+ Vector3.One*radius);
         }
 
 
         public override bool Hit(Ray ray,ref ShadeRec sr)
         {
+            if (!m_bbox.Hit(ray)) return false;
+
             Vector3 s = ray.origin - Center;
             float a = ray.dir.sqrLeng();
             float b = 2 * s.Dot(ray.dir);
@@ -61,6 +64,8 @@ namespace RayTracing.Geom
 
         public override bool ShadowHit(Ray shadowRay, ref float t)
         {
+            if (!m_bbox.Hit(shadowRay)) return false;
+
             Vector3 s = shadowRay.origin - Center;
             float a = shadowRay.dir.sqrLeng();
             float b = 2 * s.Dot(shadowRay.dir);

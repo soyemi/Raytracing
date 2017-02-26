@@ -58,11 +58,20 @@ namespace RayTracing.Utility
             Sphere spr2 = new Sphere(new Vector3(1f, -1f, -0.5f), 0.75f);
             spr2.SetMaterial(matphong);
 
+            Sphere spr3 = new Sphere(new Vector3(-1f, 0.3f, 0f), 1.0f);
+            spr3.SetMaterial(matphong);
+
+            AxisAlignedBox box1 = new AxisAlignedBox(Vector3.Ctor(-2.5f, -2f, -1f), Vector3.Ctor(1f, 3f, 2f));
+            MatPhong matbox1 = new MatPhong(0.25f, 1.0f, 0.5f, ColourF.White, Vector3.Ctor(0.2f, 0.3f, 1.0f), ColourF.White, 20f);
+            box1.SetMaterial(matbox1);
+
             objects.Add(p1);
             objects.Add(pup);
 
             objects.Add(spr1);
             objects.Add(spr2);
+            objects.Add(spr3);
+            objects.Add(box1);
 
             ambientLight = new Ambient(1.0f, ColourF.White);
             lights = new List<LightBase>();
