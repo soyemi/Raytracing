@@ -34,6 +34,8 @@ namespace RayTracing.Utility
             viewPlane.sampleType = config.sampleType;
             viewPlane.Samples = config.samples;
 
+            ToneMapping.type = ToneMapping.ToneMappingType.ACES;
+
             camera = new PerspectiveCamera(new Vector3(0,0,-5f),Vector3.Forward,Vector3.Up,viewPlane,60f);
 
             tracer = new Tracer(this);
@@ -106,7 +108,7 @@ namespace RayTracing.Utility
                     }
                     L /= (1.0f*(n * n));
 
-                    L = ToneMapping.Uncharted2ToneMapping(L, 1.0F);
+                    L = ToneMapping.Caculate(L, 1.0F);
                     SetFinalPixel(w, h, L);
 
                 }
