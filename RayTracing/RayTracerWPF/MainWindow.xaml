@@ -9,7 +9,7 @@
     <DockPanel>
         <Menu Background="#ffeeeeee" DockPanel.Dock="Top">
             <MenuItem Header="File">
-                <MenuItem Header="new"></MenuItem>
+                <MenuItem Header="Save" Name="menuSave"></MenuItem>
             </MenuItem>
             <MenuItem Header="Render" Name="menuRender">
             </MenuItem>
@@ -44,7 +44,7 @@
                             Random
                         </RadioButton>
                         <Label Width="60">Samples</Label>
-                        <TextBox Name="cfgSamples" Width="77" VerticalContentAlignment="Center">16</TextBox>
+                        <TextBox Name="cfgSamples" Width="77" VerticalContentAlignment="Center">4</TextBox>
                     </WrapPanel>
                 </GroupBox>
                 

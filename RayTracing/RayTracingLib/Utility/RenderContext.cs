@@ -71,20 +71,23 @@ namespace RayTracing.Utility
             objects.Add(spr2);
 
 
-            AmbientOccluder ao = new AmbientOccluder(Vector3.One * 0.1f, Vector3.One, 0.3f);
-            ao.SetSampler(new JitteredSampler(), config.samples);
+            AmbientOccluder ao = new AmbientOccluder(Vector3.One * 0.5f, Vector3.One, 0.3f);
+            ao.SetSampler(new JitteredSampler(), config.samples,5);
 
 
             ambientLight = ao;
             lights = new List<LightBase>();
 
-            PointLight pl = new PointLight(Vector3.Ctor(-1f, 2.5f, 2.3f), ColourF.White, 10f,5f);
+            PointLight pl = new PointLight(Vector3.Ctor(-1f, 2.5f, 2.3f), ColourF.White, 1f,5f);
             pl.CAST_SHADOW = true;
+            PointLight pl2 = new PointLight(Vector3.Ctor(0, 0f, -2.3f), Vector3.Ctor(1.0f,0.3f,0.1f), 1.0f, 1f);
+            pl2.CAST_SHADOW = true;
 
-            DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,-1f,0.2f), ColourF.White, 2.0f);
-            dl.CAST_SHADOW = true;
-            lights.Add(dl);
+            //DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,-1f,0.2f), ColourF.White, 5.0f);
+            //dl.CAST_SHADOW = true;
+            //lights.Add(dl);
             lights.Add(pl);
+            lights.Add(pl2);
         }
 
         public void Render(Action<int,int,Vector3> SetFinalPixel)

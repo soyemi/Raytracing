@@ -40,7 +40,7 @@ namespace RayTracing.Material
                         inshadow = light.ShadowCheck(shadowRay, sr);
                     }
                     if(!inshadow)
-                        L += (m_diffuseBRDF.F(sr, wo, wi) + m_specularBRDF.F(sr, wo, wi) * light.L(sr)) * ndotwi;
+                        L += (m_diffuseBRDF.F(sr, wo, wi) + m_specularBRDF.F(sr, wo, wi))* light.L(sr) * ndotwi;
                 }
             }
 

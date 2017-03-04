@@ -20,6 +20,7 @@ using System.Drawing.Imaging;
 
 using RayTracing;
 using RayTracing.Utility;
+using Microsoft.Win32;
 
 namespace RayTracerWPF
 {
@@ -39,9 +40,26 @@ namespace RayTracerWPF
             InitializeComponent();
 
             menuRender.Click += MenuRender_Click;
+            menuSave.Click += MenuSave_Click;
 
             Left = (SystemParameters.PrimaryScreenWidth - Width)*0.5f;
             Top = (SystemParameters.PrimaryScreenHeight - Height) * 0.5f;
+        }
+
+        private void MenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "PNG(*.png)|*.png";
+            if(saveDialog.ShowDialog() == true)
+            {
+                string fileName = saveDialog.FileName;
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(m_renderTask.Bitmap));
+                using (var stream = File.Create(saveDialog.FileName))
+                {
+                    encoder.Save(stream);
+                }
+            }
         }
 
         private RenderConfig RefreshConfig()
@@ -73,7 +91,6 @@ namespace RayTracerWPF
         private void OnRenderFinish(string info)
         {
             m_renderTask.RenderFinish -= OnRenderFinish;
-            m_renderTask = null;
 
             Dispatcher.Invoke(() => { RenderInfoText.Text = info; });
         }

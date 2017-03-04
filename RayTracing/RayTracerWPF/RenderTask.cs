@@ -28,6 +28,7 @@ namespace RayTracerWPF
         public int Height { get; private set; }
 
         private WriteableBitmap m_targetBitmap;
+        public WriteableBitmap Bitmap { get { return m_targetBitmap; } }
 
         private System.Windows.Controls.Image img;
         private Image image;

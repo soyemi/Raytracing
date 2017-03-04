@@ -24,10 +24,10 @@ namespace RayTracing.Light
             m_lcolor = m_ls * m_color;
         }
 
-        public void SetSampler(SamplerBase sampler,int aosamples)
+        public void SetSampler(SamplerBase sampler,int aosamples,int sampleSet = 1)
         {
             m_sampler = sampler;
-            m_sampler.GenerateSampler(aosamples,3);
+            m_sampler.GenerateSampler(aosamples, sampleSet);
             m_sampler.MapSamplesToHemisphere();
         }
 
