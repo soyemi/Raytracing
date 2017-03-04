@@ -55,5 +55,10 @@ namespace RayTracing
             get { return m_random.Next(); }
         }
 
+        public static int randomIntRange(int max)
+        {
+            return m_random.Next(max);
+        }
+
     }
 }

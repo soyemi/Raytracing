@@ -9,11 +9,12 @@ namespace RayTracing.Sampler
     {
 
 
-        public override void GenerateSampler(int num)
+        public override void GenerateSampler(int num,int set= 1)
         {
             int sc = 0;
             int n = (int)Math.Sqrt(num);
             NUM_SAMPLES = n * n;
+            m_sampleSets = set;
             m_samples = new Vector3[NUM_SAMPLES];
             float invn = 1.0f / n;
             for (int j = 0; j < n; j++)

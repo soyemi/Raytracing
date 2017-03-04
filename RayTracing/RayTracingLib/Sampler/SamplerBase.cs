@@ -16,18 +16,19 @@ namespace RayTracing.Sampler
         protected Vector3[] m_samples;
 
         protected int m_index;
-
+        protected int m_sampleSets = 1;
+        protected int m_setIndex = 0;
 
         public SamplerBase()
         {
         }
 
-        public virtual void GenerateSampler(int num)
+        public virtual void GenerateSampler(int num,int sampleSet = 1)
         {
             NUM_SAMPLES = num;
-            
-            m_samples = new Vector3[NUM_SAMPLES];
-            for(int i=0;i<NUM_SAMPLES;i++)
+            m_sampleSets = sampleSet;
+            m_samples = new Vector3[NUM_SAMPLES * m_sampleSets];
+            for(int i=0;i<NUM_SAMPLES * m_sampleSets;i++)
             {
                 setSamplePoint(i);
             }
@@ -41,6 +42,8 @@ namespace RayTracing.Sampler
         public virtual Vector3 SampleUnitSquare()
         {
             int i= m_index % NUM_SAMPLES;
+            if (i == 0) m_setIndex = Util.randomIntRange(m_sampleSets);
+            i += m_setIndex * NUM_SAMPLES;
             m_index++;
             return m_samples[i];
             
@@ -49,6 +52,8 @@ namespace RayTracing.Sampler
         public virtual Vector3 SampleHemisphere()
         {
             int i = m_index % NUM_SAMPLES;
+            if (i == 0) m_setIndex = Util.randomIntRange(m_sampleSets);
+            i += m_setIndex * NUM_SAMPLES;
             m_index++;
             return m_samples[i];
         }

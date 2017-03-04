@@ -27,7 +27,7 @@ namespace RayTracing.Light
         public void SetSampler(SamplerBase sampler,int aosamples)
         {
             m_sampler = sampler;
-            m_sampler.GenerateSampler(aosamples);
+            m_sampler.GenerateSampler(aosamples,3);
             m_sampler.MapSamplesToHemisphere();
         }
 

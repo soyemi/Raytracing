@@ -52,39 +52,24 @@ namespace RayTracing.Utility
             MatPhong matphongg = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.Green, ColourF.White, 50f);
 
             Plane p1 = new Plane(new Vector3(0, 0, 4), Vector3.Backward);
-            p1.SetMaterial(matSp1);
+            p1.SetMaterial(matao);
 
             Plane pup = new Plane(new Vector3(0, -1f, 0f), new Vector3(0,1f,0f));
             pup.SetMaterial(matphongW);
 
-            Sphere spr1 = new Sphere(new Vector3(2, 0f, 0f), 1.3f);
-            spr1.SetMaterial(matSp1);
+            Sphere spr1 = new Sphere(new Vector3(0.5f, 0f, 0f), 1.3f);
+            spr1.SetMaterial(matphongW);
 
             
 
-            Sphere spr2 = new Sphere(new Vector3(1f, -1f, -0.5f), 0.75f);
+            Sphere spr2 = new Sphere(new Vector3(-0.8f, -0.3f, -0.5f), 0.75f);
             spr2.SetMaterial(matphong);
 
-            Sphere spr3 = new Sphere(new Vector3(-1f, 0.3f, 0f), 1.0f);
-            spr3.SetMaterial(matphong);
 
-            AxisAlignedBox box1 = new AxisAlignedBox(Vector3.Ctor(-2.5f, -2f, -1f), Vector3.Ctor(1f, 3f, 2f));
-            box1.SetMaterial(matbox1);
-
-            Disk disk1 = new Disk(Vector3.Ctor(0f, 1f, -0.53f), Vector3.Ctor(-0.2f,0.5f,1f), 0.3f);
-            disk1.SetMaterial(matSp1);
-            //objects.Add(disk1);
-
-            //objects.Add(p1);
             objects.Add(pup);
-
             objects.Add(spr1);
             objects.Add(spr2);
-           // objects.Add(spr3);
-            //objects.Add(box1);
 
-           
-            spr1.SetMaterial(matphongg);
 
             AmbientOccluder ao = new AmbientOccluder(Vector3.One * 0.1f, Vector3.One, 0.3f);
             ao.SetSampler(new JitteredSampler(), config.samples);
