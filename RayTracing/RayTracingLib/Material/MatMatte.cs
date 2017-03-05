@@ -46,5 +46,31 @@ namespace RayTracing.Material
 
             return L;
         }
+
+        public override Vector3 ShadeAreaLight(ShadeRec sr)
+        {
+            Vector3 wo = -sr.ray.dir;
+            Vector3 L = ambientBRDF.rho(sr, wo) * sr.context.ambientLight.L(sr);
+            int lightCount = sr.context.lights.Count;
+            for (int j = 0; j < lightCount; j++)
+            {
+                var light = sr.context.lights[j];
+                Vector3 wi = light.GetDirection(sr);
+                float nDotWi = sr.normal.Nor().Dot(wi.Nor());
+                if (nDotWi > 0)
+                {
+                    bool inshadow = false;
+                    if (light.CAST_SHADOW)
+                    {
+                        Ray shadowRay = new Ray(sr.localHitPoint + sr.normal * TracerConst.kEpsilon, wi);
+                        inshadow = light.ShadowCheck(shadowRay, sr);
+                    }
+                    if (!inshadow)
+                        L += light.L(sr) * nDotWi * diffuseBRDF.F(sr, wo, wi) * light.G(sr) / light.PDF(sr);
+                }
+            }
+
+            return L;
+        }
     }
 }

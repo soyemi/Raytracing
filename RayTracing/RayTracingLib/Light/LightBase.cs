@@ -43,5 +43,20 @@ namespace RayTracing.Light
             }
             return false;
         }
+
+        public virtual float G(ShadeRec sr)
+        {
+            return 1f;
+        }
+
+        /// <summary>
+        /// probability density function
+        /// </summary>
+        /// <param name="sr"></param>
+        /// <returns></returns>
+        public virtual float PDF(ShadeRec sr)
+        {
+            return 1f;
+        }
     }
 }

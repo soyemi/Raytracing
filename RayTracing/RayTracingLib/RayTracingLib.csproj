@@ -49,16 +49,19 @@
     <Compile Include="Geom\BoundingBox.cs" />
     <Compile Include="Geom\Disk.cs" />
     <Compile Include="Geom\Geometry.cs" />
+    <Compile Include="Geom\AreaLigtingGeom.cs" />
     <Compile Include="Geom\Plane.cs" />
     <Compile Include="Geom\Sphere.cs" />
     <Compile Include="Light\Ambient.cs" />
     <Compile Include="Light\AmbientOccluder.cs" />
+    <Compile Include="Light\AreaLight.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="Material\MatAmbientOccluder.cs" />
     <Compile Include="Material\MatColor.cs" />
     <Compile Include="Material\MaterialBase.cs" />
+    <Compile Include="Material\MaterialEmissive.cs" />
     <Compile Include="Material\MatMatte.cs" />
     <Compile Include="Material\MatPhong.cs" />
     <Compile Include="Math\Colour.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Tracers\Ray.cs" />
     <Compile Include="Tracers\ShadeRec.cs" />
     <Compile Include="Tracers\Tracer.cs" />
+    <Compile Include="Tracers\TracerAreaLigting.cs" />
     <Compile Include="Tracers\TracerConst.cs" />
     <Compile Include="Tracers\TracerNormal.cs" />
     <Compile Include="Utility\RenderConfig.cs" />

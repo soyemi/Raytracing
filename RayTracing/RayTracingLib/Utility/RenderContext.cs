@@ -36,44 +36,33 @@ namespace RayTracing.Utility
             viewPlane.SAMPLES = config.samples;
             viewPlane.SetSampler(new JitteredSampler());
 
-            ToneMapping.type = ToneMapping.ToneMappingType.ACES;
-
+            ToneMapping.type = ToneMapping.ToneMappingType.Reinhard;
             camera = new PerspectiveCamera(new Vector3(0,0,-5f),Vector3.Forward,Vector3.Up,viewPlane,60f);
-
-            tracer = new Tracer(this);
+            //tracer = new Tracer(this);
+            tracer = new TracerAreaLigting(this);
 
             MatAmbientOccluder matao = new MatAmbientOccluder();
-
-            MatMatte matSp1 = new MatMatte(ColourF.White, ColourF.White);
-
-            MatPhong matbox1 = new MatPhong(0.25f, 1.0f, 0.5f, ColourF.White, Vector3.Ctor(0.2f, 0.3f, 1.0f), ColourF.White, 20f);
             MatPhong matphong = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.Red, ColourF.White, 100F);
             MatPhong matphongW = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.White, ColourF.White, 10F);
-            MatPhong matphongg = new MatPhong(0.25f, 0.7f, 0.3f, ColourF.White, ColourF.Green, ColourF.White, 50f);
 
             Plane p1 = new Plane(new Vector3(0, 0, 4), Vector3.Backward);
-            p1.SetMaterial(matao);
-
+            p1.SetMaterial(matphongW);
             Plane pup = new Plane(new Vector3(0, -1f, 0f), new Vector3(0,1f,0f));
             pup.SetMaterial(matphongW);
-
             Sphere spr1 = new Sphere(new Vector3(0.5f, 0f, 0f), 1.3f);
             spr1.SetMaterial(matphongW);
-
-            
-
             Sphere spr2 = new Sphere(new Vector3(-0.8f, -0.3f, -0.5f), 0.75f);
             spr2.SetMaterial(matphong);
-
+            //Disk disk1 = new Disk(new Vector3(3.0f, 0f, 0f), new Vector3(-0.5f, 0f, -0.1f), 0.7f);
+            //disk1.SetMaterial(matphongW);
 
             objects.Add(pup);
             objects.Add(spr1);
             objects.Add(spr2);
-
+            //objects.Add(disk1);
 
             AmbientOccluder ao = new AmbientOccluder(Vector3.One * 0.5f, Vector3.One, 0.3f);
             ao.SetSampler(new JitteredSampler(), config.samples,5);
-
 
             ambientLight = ao;
             lights = new List<LightBase>();
@@ -83,11 +72,25 @@ namespace RayTracing.Utility
             PointLight pl2 = new PointLight(Vector3.Ctor(0, 0f, -2.3f), Vector3.Ctor(1.0f,0.3f,0.1f), 1.0f, 1f);
             pl2.CAST_SHADOW = true;
 
+            AreaLight areaLit = new AreaLight();
+            areaLit.CAST_SHADOW = true;
+            Disk areaLitGeom = new Disk(new Vector3(3.0f, 0.5f, 0f), new Vector3(-0.5f, 0f, -0.1f), 0.7f,false);
+            areaLitGeom.SetSampler(new JitteredSampler(), config.samples, 10);
+            areaLit.GEOMETRY = areaLitGeom;
+            MaterialEmissive areaLitMat = new MaterialEmissive(Vector3.Ctor(1.0f, 1.0f, 1.0f), 20f);
+            areaLit.MATERIAL = areaLitMat;
+            areaLitGeom.SetMaterial(areaLitMat);
+
+            objects.Add(areaLitGeom);
+
             //DirectionalLight dl = new DirectionalLight(Vector3.Ctor(0f,-1f,0.2f), ColourF.White, 5.0f);
             //dl.CAST_SHADOW = true;
             //lights.Add(dl);
+
+
             lights.Add(pl);
             lights.Add(pl2);
+            lights.Add(areaLit);
         }
 
         public void Render(Action<int,int,Vector3> SetFinalPixel)

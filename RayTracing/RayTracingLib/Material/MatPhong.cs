@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RayTracing.Tracers;
 using RayTracing.BRDFs;
+using RayTracing.Light;
 
 namespace RayTracing.Material
 {
@@ -29,18 +30,29 @@ namespace RayTracing.Material
             for(int i=0;i<lc;i++)
             {
                 var light = sr.context.lights[i];
-                Vector3 wi = light.GetDirection(sr);
+
+                Vector3 wi = light.GetDirection(sr).Nor();
+
+                AreaLight al = light as AreaLight;
+                if (al!= null && al.GEOMETRY.GetNormal(Vector3.Zero).Dot(wi) >0)
+                {
+                    //判定单向
+                    continue;
+                }
+
                 float ndotwi = sr.normal.Dot(wi);
                 if(ndotwi > 0)
                 {
                     bool inshadow = false;
-                    if(light.CAST_SHADOW)
+                    if (light.CAST_SHADOW)
                     {
                         Ray shadowRay = new Ray(sr.localHitPoint + sr.normal * TracerConst.kEpsilon, wi);
                         inshadow = light.ShadowCheck(shadowRay, sr);
                     }
-                    if(!inshadow)
-                        L += (m_diffuseBRDF.F(sr, wo, wi) + m_specularBRDF.F(sr, wo, wi))* light.L(sr) * ndotwi;
+
+                    
+                    if (!inshadow)
+                        L += (m_diffuseBRDF.F(sr, wo, wi) + m_specularBRDF.F(sr, wo, wi)) * light.L(sr) * ndotwi * light.G(sr)/light.PDF(sr);
                 }
             }
 

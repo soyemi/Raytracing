@@ -11,5 +11,14 @@ namespace RayTracing
     {
 
         public abstract Vector3 Shade(ShadeRec sr);
+        public virtual Vector3 ShadeAreaLight(ShadeRec sr)
+        {
+            return Shade(sr);
+        }
+
+        public virtual Vector3 GetColorMain()
+        {
+            return ColourF.Error;
+        }
     }
 }
